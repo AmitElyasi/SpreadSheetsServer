@@ -1,0 +1,428 @@
+{
+  "info": {
+    "name": "Spreadsheet API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Sheets",
+      "item": [
+        {
+          "name": "Create Sheet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"columns\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"double\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Creates a new sheet with the defined column schema"
+          }
+        },
+        {
+          "name": "Create Sheet with Custom ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"my-custom-sheet-id\",\n  \"columns\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"int\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Creates a new sheet with a custom ID and defined column schema"
+          }
+        },
+        {
+          "name": "Get Sheet",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}"]
+            },
+            "description": "Gets a sheet by its ID in CSV format with row numbers in the first column. Replace {{sheetId}} with the actual ID returned from create sheet"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cells",
+      "item": [
+        {
+          "name": "Set String Cell Value",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/A/10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "A", "10"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"Hello World\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Sets a string value in column A, row 10"
+          }
+        },
+        {
+          "name": "Set Integer Cell Value",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/B/5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "B", "5"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": 42\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Sets an integer value in column B, row 5"
+          }
+        },
+        {
+          "name": "Set Boolean Cell Value",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/C/3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "C", "3"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Sets a boolean value in column C, row 3"
+          }
+        },
+        {
+          "name": "Set Double Cell Value",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/D/7",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "D", "7"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": 3.14159\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Sets a double value in column D, row 7"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lookup Functions",
+      "item": [
+        {
+          "name": "Set Lookup Function",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/A/20",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "A", "20"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"lookup(A,10)\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Sets a lookup function that references cell A10"
+          }
+        },
+        {
+          "name": "Update Referenced Cell",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/A/10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "A", "10"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"Updated Value\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Updates a cell that is referenced by a lookup function"
+          }
+        },
+        {
+          "name": "Try to Create Cycle (should fail)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/A/10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "A", "10"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"lookup(A,20)\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Attempts to create a cycle by making cell A10 reference cell A20, which already references A10"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Complex Scenarios",
+      "item": [
+        {
+          "name": "Create Sheet with Different Types",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"columns\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"boolean\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Creates a new sheet for type validation testing"
+          }
+        },
+        {
+          "name": "Set Value with Wrong Type (should fail)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/B/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "B", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"This is not an integer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Attempts to set a string value in an integer column, which should fail"
+          }
+        },
+        {
+          "name": "Set Lookup with Type Mismatch (should fail)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/C/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "C", "2"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"lookup(A,1)\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Attempts to set a lookup from a string column to a boolean column, which should fail due to type mismatch"
+          }
+        },
+        {
+          "name": "Test Self-Referencing Cycle (should fail)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/sheets/{{sheetId}}/cells/A/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sheets", "{{sheetId}}", "cells", "A", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"lookup(A,1)\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Attempts to create a self-reference cycle, which should fail"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "sheetId",
+      "value": "",
+      "description": "Replace this with an actual sheet ID returned from create sheet response"
+    }
+  ]
+}
+
