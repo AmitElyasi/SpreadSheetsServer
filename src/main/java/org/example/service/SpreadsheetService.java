@@ -84,6 +84,11 @@ public class SpreadsheetService {
         if (value instanceof String && ((String) value).startsWith("lookup(")) {
             log.debug("Processing lookup function: {}", value);
             processLookupFunction(sheet, cell, (String) value);
+        }
+        // Check if value is a lookup function
+        else if (value instanceof String && ((String) value).startsWith("sum(")) {
+            log.debug("Processing sum function: {}", value);
+            processSumFunction(sheet, cell, (String) value);
         } else {
             // Validate the type of the value against the column type
             log.debug("Validating value type against column type: {}", column.getType());
@@ -105,6 +110,35 @@ public class SpreadsheetService {
         updateDependentCells(sheet, columnName, rowIndex, new HashSet<>());
 
         return cell;
+    }
+
+
+    private void processSumFunction(Sheet sheet, Cell cell, String sumFunction) {
+        // sum(A,1,10)
+        Pattern pattern = Pattern.compile("sum\\(\\s*([A-Za-z]+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\)");
+        Matcher matcher = pattern.matcher(sumFunction);
+
+        if (!matcher.matches()) {
+            log.warn("Invalid sum function format: {}", sumFunction);
+            throw new IllegalArgumentException("Invalid sum function format: " + sumFunction);
+        }
+
+        String sumedColumn = matcher.group(1);
+        Integer startRow = Integer.parseInt(matcher.group(2));
+        Integer endRow = Integer.parseInt(matcher.group(3));
+
+        List<Cell> cellsToSum = new ArrayList<>();
+
+        for (Integer rowIndex = startRow ; rowIndex <= endRow ; rowIndex++) {
+            String currKey = sheet.generateCellKey(sumedColumn, rowIndex);
+
+            if (sheet.getCells().containsKey(currKey)) {
+                Cell currCell = sheet.getCells().get(currKey);
+                cellsToSum.add(currCell);
+            }
+        }
+
+        cell.setSumRefs(cellsToSum);
     }
 
     /**

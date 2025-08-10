@@ -2,7 +2,11 @@ package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 
+import java.util.List;
+
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Cell {
     private String column;
@@ -17,6 +21,9 @@ public class Cell {
 
     @JsonIgnore
     private Integer referencedRow;
+
+    @JsonIgnore
+    private List<Cell> sumRefs;
 
     public Cell() {
     }
@@ -44,7 +51,16 @@ public class Cell {
     }
 
     public Object getValue() {
-        return value;
+        if (null == sumRefs) {
+            return value;
+        }
+
+        // sum
+        Integer  sum = 0;
+        for (Cell cell : sumRefs) {
+            sum = sum + (Integer)cell.getValue();
+        }
+        return sum;
     }
 
     public void setValue(Object value) {
